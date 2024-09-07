@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { Box, InputBase, IconButton, Paper, Grid2 } from '@mui/material'
-import { Add as AddIcon } from '@mui/icons-material'
+import { Add as AddIcon } from '@mui/icons-material';
+import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
 
-import '@fontsource/roboto'
-import './popup.css';
+import '@fontsource/roboto';
+import { getStoredCities, setStoredCities } from '../utils/storage';
 import WeatherCard from './WeatherCard/WeatherCard';
+import './popup.css';
 
 // My React component
 const App = () => {
@@ -18,16 +19,30 @@ const App = () => {
     ])
     const [cityInput, setCityInput] = useState<string>('')
 
+    useEffect(() => {
+        getStoredCities().then(cities => setCities(cities))
+    }, [])
+
     const handleCityButtonClick = () => {
-        if (cityInput) {
-            setCities([...cities, cityInput]);
+        if (cityInput === '') {
+            return
         }
-        setCityInput('');
+        const updatedCities = [...cities, cityInput]
+        setStoredCities(updatedCities)
+            .then(() => {
+                setCities(updatedCities)
+                setCityInput('')
+            })
     }
 
     const handleCityDeleteButton = (index: number) => {
         cities.splice(index, 1)
-        setCities([...cities])
+        const updatedCities = [...cities, cityInput]
+        setStoredCities(updatedCities)
+            .then(() => {
+                setCities(updatedCities)
+
+            })
     }
 
 
