@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
-import { fetchOpenWeatherData, OpenWeatherData } from '../../utils/api';
+import React, { useEffect, useState } from 'react';
+import { OpenWeatherData, fetchOpenWeatherData } from '../../utils/api';
 
 const WeatherCardContainer: React.FC<{
     children: React.ReactNode
