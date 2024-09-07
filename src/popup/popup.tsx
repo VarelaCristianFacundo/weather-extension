@@ -1,11 +1,11 @@
+import { Add as AddIcon } from '@mui/icons-material';
+import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { Add as AddIcon } from '@mui/icons-material';
-import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
 
 import '@fontsource/roboto';
-import { getStoredCities, setStoredCities } from '../utils/storage';
+import { LocalStorageOptions, getStoredCities, getStoredOptions, setStoredCities, setStoredOptions } from '../utils/storage';
 import WeatherCard from './WeatherCard/WeatherCard';
 import './popup.css';
 
@@ -18,9 +18,11 @@ const App = () => {
         'London',
     ])
     const [cityInput, setCityInput] = useState<string>('')
+    const [options, setOptions] = useState<LocalStorageOptions | null>(null)
 
     useEffect(() => {
         getStoredCities().then(cities => setCities(cities))
+        getStoredOptions().then(options => setOptions(options))
     }, [])
 
     const handleCityButtonClick = () => {
@@ -45,10 +47,29 @@ const App = () => {
             })
     }
 
+    const HandleTempScaleButton = () => {
+
+        if (!options) {
+            return null
+        }
+
+        const updateOptions: LocalStorageOptions = {
+            ...options,
+            tempScale: options.tempScale === 'metric' ? 'imperial' : 'metric',
+        }
+        setStoredOptions(updateOptions).then(() => {
+            setOptions(updateOptions)
+        })
+    }
+
+    if (!options) {
+        return null
+    }
+
 
     return (
         <Box mx="8px" my="16px">
-            <Grid2 container>
+            <Grid2 container justifyContent="space-evenly">
                 <Grid2>
                     <Paper>
                         <Box px="15px" py="5px">
@@ -66,6 +87,15 @@ const App = () => {
                         </Box>
                     </Paper>
                 </Grid2>
+                <Grid2>
+                    <Paper>
+                        <Box py="4px">
+                            <IconButton onClick={HandleTempScaleButton}>
+                                {options.tempScale === 'metric' ? '\u2103' : '\u2109'}
+                            </IconButton>
+                        </Box>
+                    </Paper>
+                </Grid2>
             </Grid2>
 
             {
@@ -73,11 +103,12 @@ const App = () => {
                     <WeatherCard
                         key={index}
                         city={city}
+                        tempScale={options.tempScale}
                         onDelete={() => handleCityDeleteButton(index)} />
                 ))
             }
             <Box height="16px" />
-        </Box>
+        </Box >
     );
 }
 

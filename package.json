@@ -5,17 +5,24 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch --progress --config webpack.dev.js",
-    "build": "webpack --watch --progress --config webpack.prod.js"
+    "build": "webpack --watch --progress --config webpack.prod.js",
+    "lint": "eslint \"./src/**/*.{js,ts,tsx}\" --fix --no-ignore"
   },
   "author": "Cristian Varela",
   "license": "UNLICENSED",
   "devDependencies": {
     "@types/chrome": "^0.0.270",
     "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
     "html-webpack-plugin": "^5.6.0",
+    "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "style-loader": "^4.0.0",
@@ -29,7 +36,7 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.14",
-    "@mui/icons-material": "^6.0.1",
-    "@mui/material": "^6.0.1"
+    "@mui/icons-material": "^6.0.2",
+    "@mui/material": "^6.0.2"
   }
 }

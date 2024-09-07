@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './options.css'
+import './options.css';
 
 // My React component
 const Test = () => <img src="icon.png" />
