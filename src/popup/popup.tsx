@@ -1,8 +1,8 @@
+import { Add as AddIcon } from '@mui/icons-material';
+import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { Add as AddIcon } from '@mui/icons-material';
-import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
 
 import '@fontsource/roboto';
 import { LocalStorageOptions, getStoredCities, getStoredOptions, setStoredCities, setStoredOptions } from '../utils/storage';
@@ -48,6 +48,11 @@ const App = () => {
     }
 
     const HandleTempScaleButton = () => {
+
+        if (!options) {
+            return null
+        }
+
         const updateOptions: LocalStorageOptions = {
             ...options,
             tempScale: options.tempScale === 'metric' ? 'imperial' : 'metric',

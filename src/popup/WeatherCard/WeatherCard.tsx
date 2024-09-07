@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+
 import { OpenWeatherData, OpenWeatherTempScale, fetchOpenWeatherData } from '../../utils/api';
 
 const WeatherCardContainer: React.FC<{
@@ -22,7 +23,7 @@ const WeatherCardContainer: React.FC<{
     );
 };
 
-type WeatherCardState = "loading" | "error" | "ready"
+type WeatherCardState = 'loading' | 'error' | 'ready'
 
 const WeatherCard: React.FC<{
     city: string
@@ -30,23 +31,23 @@ const WeatherCard: React.FC<{
     onDelete?: () => void
 }> = ({ city, tempScale, onDelete }) => {
     const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null);
-    const [cardState, setCardState] = useState<WeatherCardState>("loading");
+    const [cardState, setCardState] = useState<WeatherCardState>('loading');
 
     useEffect(() => {
         fetchOpenWeatherData(city, tempScale)
             .then(data => {
                 setWeatherData(data);
-                setCardState("ready");
+                setCardState('ready');
             })
-            .catch(error => setCardState("error"));
+            .catch(error => setCardState('error'));
     }, [city, tempScale]);
 
-    if (cardState == "loading" || cardState == "error") {
+    if (cardState == 'loading' || cardState == 'error') {
         return <WeatherCardContainer onDelete={onDelete}>
             <Typography variant='body1'>
                 {
-                    cardState === "loading" ? "Loading weather data..." :
-                        "Error fetching weather data."
+                    cardState === 'loading' ? 'Loading weather data...' :
+                        'Error fetching weather data.'
                 }
             </Typography>
         </WeatherCardContainer>;
@@ -54,9 +55,15 @@ const WeatherCard: React.FC<{
 
     return (
         <WeatherCardContainer onDelete={onDelete}>
-            <Typography variant='h5'>{weatherData.name}</Typography>
-            <Typography variant='body1'>{Math.round(weatherData.main.temp)}°C</Typography>
-            <Typography variant='body1'>Feels like: {Math.round(weatherData.main.feels_like)}°C</Typography>
+            {weatherData ? (
+                <>
+                    <Typography variant='h5'>{weatherData.name}</Typography>
+                    <Typography variant='body1'>{Math.round(weatherData.main.temp)}°C</Typography>
+                    <Typography variant='body1'>Feels like: {Math.round(weatherData.main.feels_like)}°C</Typography>
+                </>
+            ) : (
+                <Typography variant='body1'>No weather data available</Typography>
+            )}
         </WeatherCardContainer>
     );
 };

@@ -44,9 +44,13 @@ export function setStoredOptions(options: LocalStorageOptions): Promise<void> {
 
 export function getStoredOptions(): Promise<LocalStorageOptions> {
   const keys: LocalStorageKeys[] = ['options'];
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     chrome.storage.local.get(keys, (res: LocalStorage) => {
-      resolve(res.options);
+      if (res.options) {
+        resolve(res.options);
+      } else {
+        reject(new Error('No stored options found'));
+      }
     });
   });
 }
