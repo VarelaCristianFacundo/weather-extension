@@ -39,10 +39,10 @@ const WeatherCard: React.FC<{
                 setWeatherData(data);
                 setCardState('ready');
             })
-            .catch(error => setCardState('error'));
+            .catch(_error => setCardState('error'));
     }, [city, tempScale]);
 
-    if (cardState == 'loading' || cardState == 'error') {
+    if (cardState === 'loading' || cardState === 'error') {
         return <WeatherCardContainer onDelete={onDelete}>
             <Typography variant='body1'>
                 {

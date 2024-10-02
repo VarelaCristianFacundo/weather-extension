@@ -8,8 +8,9 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+
 import { LocalStorageOptions, getStoredOptions, setStoredOptions } from '../utils/storage';
 import './options.css';
 
@@ -22,7 +23,7 @@ const Test = () => {
     const [formState, setFormState] = useState<FormState>('ready')
 
     useEffect(() => {
-        getStoredOptions().then(options => setOptions(options))
+        getStoredOptions().then(options => setOptions(options)).catch(error => console.error(error));
     }, [])
 
     const handleHomeCityChange = (homeCity: string) => {
@@ -37,12 +38,15 @@ const Test = () => {
     const handleSaveButtonClick = () => {
         if (options) {
             setFormState('saving');
-            setStoredOptions(options).then(() => {
-                setTimeout(() => {
-                    setFormState('ready');
-                    console.log('Options saved successfully');
-                }, 1000);
-            });
+            setStoredOptions(options)
+                .then(() => {
+                    setTimeout(() => {
+                        setFormState('ready');
+                        // eslint-disable-next-line no-console
+                        console.log('Options saved successfully');
+                    }, 1000);
+                })
+                .catch(error => console.error(error)); // Manejo de error            
         }
     }
 
