@@ -38,7 +38,6 @@ module.exports = {
         },
       },
     ],
-    '@typescript-eslint/type-annotation-spacing': 'error',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-floating-promises': 'warn',
@@ -46,7 +45,9 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      typescript: {},
+      webpack: {
+        config: './webpack.common.js',
+      },
     },
   },
 };

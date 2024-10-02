@@ -21,8 +21,10 @@ const App = () => {
     const [options, setOptions] = useState<LocalStorageOptions | null>(null)
 
     useEffect(() => {
-        getStoredCities().then(cities => setCities(cities))
-        getStoredOptions().then(options => setOptions(options))
+        getStoredCities()
+            .then(cities => setCities(cities))
+            .catch(error => console.error(error)); // Manejo de error
+        getStoredOptions().then(options => setOptions(options)).catch(error => console.error(error));
     }, [])
 
     const handleCityButtonClick = () => {
@@ -35,6 +37,8 @@ const App = () => {
                 setCities(updatedCities)
                 setCityInput('')
             })
+            .catch(error => console.error(error)); // Manejo de error
+
     }
 
     const handleCityDeleteButton = (index: number) => {
@@ -45,6 +49,8 @@ const App = () => {
                 setCities(updatedCities)
 
             })
+            .catch(error => console.error(error)); // Manejo de error
+
     }
 
     const HandleTempScaleButton = () => {
@@ -57,9 +63,12 @@ const App = () => {
             ...options,
             tempScale: options.tempScale === 'metric' ? 'imperial' : 'metric',
         }
-        setStoredOptions(updateOptions).then(() => {
-            setOptions(updateOptions)
-        })
+        setStoredOptions(updateOptions)
+            .then(() => {
+                setOptions(updateOptions)
+            })
+            .catch(error => console.error(error)); // Manejo de error
+
     }
 
     if (!options) {
@@ -99,11 +108,11 @@ const App = () => {
             </Grid2>
             {
                 options.homeCity !== '' && (
-                <WeatherCard
-                    city={options.homeCity}
-                    tempScale={options.tempScale}
+                    <WeatherCard
+                        city={options.homeCity}
+                        tempScale={options.tempScale}
                     />
-                    )}
+                )}
 
             {
                 cities.map((city, index) => (
