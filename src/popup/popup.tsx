@@ -1,12 +1,12 @@
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 
 import '@fontsource/roboto';
+import WeatherCard from '../components/WeatherCard/WeatherCard';
 import { LocalStorageOptions, getStoredCities, getStoredOptions, setStoredCities, setStoredOptions } from '../utils/storage';
-import WeatherCard from './WeatherCard/WeatherCard';
 import './popup.css';
 
 // My React component

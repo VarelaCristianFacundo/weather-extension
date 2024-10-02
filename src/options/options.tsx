@@ -5,6 +5,7 @@ import {
     Card,
     CardContent,
     Grid2,
+    Switch,
     TextField,
     Typography
 } from '@mui/material';
@@ -31,6 +32,15 @@ const Test = () => {
             setOptions({
                 ...options,
                 homeCity
+            });
+        }
+    }
+
+    const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+        if (options) {
+            setOptions({
+                ...options,
+                hasAutoOverlay
             });
         }
     }
@@ -71,6 +81,15 @@ const Test = () => {
                                 placeholder='enter a home city name'
                                 value={options.homeCity}
                                 onChange={event => handleHomeCityChange(event.target.value)}
+                                disabled={isFieldsDisabled}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Typography variant="body1">Auto toggle overlay on webpage load</Typography>
+                            <Switch
+                                color='primary'
+                                checked={options.hasAutoOverlay}
+                                onChange={event => handleAutoOverlayChange(event.target.checked)}
                                 disabled={isFieldsDisabled}
                             />
                         </Grid2>

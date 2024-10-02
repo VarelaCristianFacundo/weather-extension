@@ -1,11 +1,13 @@
 {
-  "name": "weather-extension",
+  "name": "google-extension-react",
   "version": "1.0.0",
+  "description": "Chrome extension in React",
+  "main": "index.js",
   "scripts": {
-    "start": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "lint": "eslint \"./src/**/*.{js,ts,tsx}\" --fix --no-ignore",
-    "types:check": "tsc --noEmit"
+    "types:check": "tsc --noEmit",
+    "start": "webpack --watch --progress --config webpack.dev.js",
+    "build": "webpack --watch --progress --config webpack.prod.js",
+    "lint": "eslint \"./src/**/*.{js,ts,tsx}\" --fix --no-ignore"
   },
   "author": "Cristian Varela",
   "license": "UNLICENSED",
