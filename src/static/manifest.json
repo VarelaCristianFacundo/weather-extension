@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "React extension",
-  "description": "An extension in React",
+  "name": "Weather Extension",
+  "description": "Weather extension in React",
   "version": "1.0.0",
   "icons": {
     "16": "icon16.png",
@@ -17,7 +17,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "tabs"],
+  "permissions": ["alarms", "storage", "tabs", "contextMenus"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
