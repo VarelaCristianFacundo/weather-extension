@@ -4,4 +4,10 @@
 
 .weatherCard-body {
     font-size: 16px !important;
+    text-align: center !important;
+}
+
+.weatherCard-temp {
+    font-size: 46px !important;
+    text-align: center !important;
 }
