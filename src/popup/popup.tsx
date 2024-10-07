@@ -1,13 +1,15 @@
-import { Add as AddIcon } from '@mui/icons-material';
+import { Add as AddIcon, PictureInPicture as PictureInPictureIcon } from '@mui/icons-material';
 import { Box, Grid2, IconButton, InputBase, Paper } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 
 import '@fontsource/roboto';
+import WeatherCard from '../components/WeatherCard/WeatherCard';
+import { Messages } from '../utils/messages';
 import { LocalStorageOptions, getStoredCities, getStoredOptions, setStoredCities, setStoredOptions } from '../utils/storage';
-import WeatherCard from './WeatherCard/WeatherCard';
 import './popup.css';
+
 
 // My React component
 const App = () => {
@@ -71,6 +73,27 @@ const App = () => {
 
     }
 
+    const HandleOverlayButton = async () => {
+        try {
+            const tabs = await chrome.tabs.query({ active: true });
+            if (tabs.length > 0 && tabs[0].id !== undefined) {
+                try {
+                    await chrome.tabs.sendMessage(tabs[0].id, Messages.TOGGLE_OVERLAY);
+                    // eslint-disable-next-line no-console
+                    console.log('Message sent successfully');
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                }
+            } else {
+                console.error('Tab ID is undefined');
+            }
+        } catch (error) {
+            console.error('Error querying tabs:', error);
+        }
+    };
+
+
+
     if (!options) {
         return null
     }
@@ -101,6 +124,15 @@ const App = () => {
                         <Box py="4px">
                             <IconButton onClick={HandleTempScaleButton}>
                                 {options.tempScale === 'metric' ? '\u2103' : '\u2109'}
+                            </IconButton>
+                        </Box>
+                    </Paper>
+                </Grid2>
+                <Grid2>
+                    <Paper>
+                        <Box py="4px">
+                            <IconButton onClick={HandleOverlayButton}>
+                                <PictureInPictureIcon />
                             </IconButton>
                         </Box>
                     </Paper>

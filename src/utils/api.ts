@@ -29,7 +29,7 @@ export async function fetchOpenWeatherData(
   tempScale: OpenWeatherTempScale,
 ): Promise<OpenWeatherData> {
   const res = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=${tempScale}&appid=${OPEN_WEATHER_API_KEY}`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${tempScale}&appid=${OPEN_WEATHER_API_KEY}`,
   );
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`);
