@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import WeatherCard from '../components/WeatherCard';
+import { Messages } from '../utils/messages';
 import { LocalStorageOptions, getStoredOptions } from '../utils/storage';
 import './contentScript.css';
+
 
 // My React component
 const Content = () => {
@@ -19,6 +21,17 @@ const Content = () => {
       })
       .catch((err) => { console.error(err); });
   }, [])
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener((msg) => {
+      // eslint-disable-next-line no-console
+      console.log('Mensaje recibido:', msg);  // Para verificar si el mensaje se recibe correctamente
+      if (msg.type === Messages.TOGGLE_OVERLAY) {
+        setIsActive(prevState => !prevState);
+      }
+    });
+  }, []);
+
 
   if (!options) {
     return null;

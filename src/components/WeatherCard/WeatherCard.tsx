@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 import { OpenWeatherData, OpenWeatherTempScale, fetchOpenWeatherData } from '../../utils/api';
 
+import './WeatherCard.css';
+
 const WeatherCardContainer: React.FC<{
     children: React.ReactNode
     onDelete?: () => void
@@ -14,7 +16,9 @@ const WeatherCardContainer: React.FC<{
                 <CardActions>
                     {
                         onDelete && (
-                            <Button color='secondary' onClick={onDelete}>Delete</Button>
+                            <Button color='secondary' onClick={onDelete}>
+                                <Typography className='weatherCard-body'>Delete</Typography>
+                            </Button>
                         )
                     }
                 </CardActions>
@@ -44,7 +48,8 @@ const WeatherCard: React.FC<{
 
     if (cardState === 'loading' || cardState === 'error') {
         return <WeatherCardContainer onDelete={onDelete}>
-            <Typography variant='body1'>
+            <Typography className='weatherCard-title'>{city}</Typography>
+            <Typography className='weatherCard-body'>
                 {
                     cardState === 'loading' ? 'Loading weather data...' :
                         'Error fetching weather data.'
@@ -57,12 +62,12 @@ const WeatherCard: React.FC<{
         <WeatherCardContainer onDelete={onDelete}>
             {weatherData ? (
                 <>
-                    <Typography variant='h5'>{weatherData.name}</Typography>
-                    <Typography variant='body1'>{Math.round(weatherData.main.temp)}°C</Typography>
-                    <Typography variant='body1'>Feels like: {Math.round(weatherData.main.feels_like)}°C</Typography>
+                    <Typography className='weatherCard-title'>{weatherData.name}</Typography>
+                    <Typography className='weatherCard-body'>{Math.round(weatherData.main.temp)}°C</Typography>
+                    <Typography className='weatherCard-body'>Feels like: {Math.round(weatherData.main.feels_like)}°C</Typography>
                 </>
             ) : (
-                <Typography variant='body1'>No weather data available</Typography>
+                <Typography className='weatherCard-body'>No weather data available</Typography>
             )}
         </WeatherCardContainer>
     );
